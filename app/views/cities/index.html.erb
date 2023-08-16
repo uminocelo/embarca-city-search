@@ -1,0 +1,5 @@
+<%= render 'search_form' %>
+
+<% if params[:state].present? or params[:name].present? %>
+  <%= render 'search_results' %>
+<% end %>
