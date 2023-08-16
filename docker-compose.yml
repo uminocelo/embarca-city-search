@@ -23,7 +23,7 @@ services:
       - db
   rubocop:
     build: .
-    command: bundle exec rubocop --auto-correct
+    command: bundle exec rubocop -A
     volumes:
       - .:/app
     depends_on:
