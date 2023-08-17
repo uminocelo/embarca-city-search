@@ -13,8 +13,7 @@ Rails/Validation:
 
 Metrics/BlockLength:
   Enabled: true
-  Exclude:
-    - 'spec/*'
+  Max: 35
 
 
 Layout/IndentationConsistency:
