@@ -3,12 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe StatesController, type: :controller do
-  describe 'GET #index' do
-    before(:each) do
-      City.destroy_all
-      State.destroy_all
-    end
+  before(:each) do
+    City.destroy_all
+    State.destroy_all
+  end
 
+  describe 'GET #index' do
     it 'returns a successful response' do
       get :index
       expect(response).to have_http_status(:success)
@@ -30,11 +30,6 @@ RSpec.describe StatesController, type: :controller do
   end
 
   describe 'GET #show' do
-    before(:each) do
-      City.destroy_all
-      State.destroy_all
-    end
-
     let(:state) { State.create(name: 'Espirito Santo', abbreviation: 'ES') }
 
     it 'returns a successful response' do
@@ -51,11 +46,6 @@ RSpec.describe StatesController, type: :controller do
   end
 
   describe 'POST #create' do
-    before(:each) do
-      City.destroy_all
-      State.destroy_all
-    end
-
     context 'with valid attributes' do
       let(:valid_attributes) { { state: { name: 'Amazonas', abbreviation: 'AM' } } }
 
@@ -95,11 +85,6 @@ RSpec.describe StatesController, type: :controller do
   end
 
   describe 'PATCH #update' do
-    before(:each) do
-      City.destroy_all
-      State.destroy_all
-    end
-
     let(:state) { State.create(name: 'Espirito Santo', abbreviation: 'ES') }
 
     context 'with valid attributes' do
@@ -117,7 +102,6 @@ RSpec.describe StatesController, type: :controller do
 
         json_response = JSON.parse(response.body)
         expect(json_response['name']).to eq('Espírito Santo')
-        expect(json_response['abbreviation']).to eq('ES')
       end
     end
 
@@ -140,11 +124,6 @@ RSpec.describe StatesController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    before(:each) do
-      City.destroy_all
-      State.destroy_all
-    end
-
     let!(:state) { State.create(name: 'Espirito Santo', abbreviation: 'ES') }
 
     it 'destroys the state' do

@@ -10,14 +10,18 @@ RSpec.describe City, type: :model do
       expect(city.errors[:name]).to include("can't be blank")
     end
   end
+end
 
+RSpec.describe City, type: :model do
   describe 'associations' do
     it 'belongs to a state' do
       association = described_class.reflect_on_association(:state)
       expect(association.macro).to eq(:belongs_to)
     end
   end
+end
 
+RSpec.describe City, type: :model do
   describe 'search' do
     let!(:state_rio_de_janeiro) { State.create(name: 'Rio de Janeiro', abbreviation: 'RJ') }
     let!(:state_sao_paulo) { State.create(name: 'São Paulo', abbreviation: 'SP') }

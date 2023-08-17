@@ -3,10 +3,15 @@
 require 'rails_helper'
 
 RSpec.describe CitiesController, type: :controller do
-  describe 'GET #show' do
-    let(:state) { State.create(name: 'Espirito Santo', abbreviation: 'ES') }
-    let(:city) { City.create(name: 'Vitoria', state: state) }
+  before(:each) do
+    City.destroy_all
+    State.destroy_all
+  end
 
+  let(:state) { State.create(name: 'Espirito Santo', abbreviation: 'ES') }
+  let!(:city) { City.create(name: 'Vitoria', state: state) }
+
+  describe 'GET #show' do
     it 'returns a successful response' do
       get :show, params: { id: city.id }
       expect(response).to have_http_status(:success)
@@ -21,19 +26,11 @@ RSpec.describe CitiesController, type: :controller do
   end
 
   describe 'POST #create' do
-    before(:each) do
-      City.destroy_all
-      State.destroy_all
-    end
-
     context 'with valid attributes' do
-      let(:state) { State.create(name: 'Espirito Santo', abbreviation: 'ES') }
       let(:valid_attributes) { { city: { name: 'Vitoria', state_id: state.id } } }
 
       it 'creates a new city' do
-        expect do
-          post :create, params: valid_attributes
-        end.to change(City, :count).by(1)
+        expect { post :create, params: valid_attributes }.to change(City, :count).by(1)
       end
 
       it 'returns a JSON representation of the created city' do
@@ -50,9 +47,7 @@ RSpec.describe CitiesController, type: :controller do
       let(:invalid_attributes) { { city: { name: '' } } }
 
       it 'does not create a new city' do
-        expect do
-          post :create, params: invalid_attributes
-        end.not_to change(City, :count)
+        expect { post :create, params: invalid_attributes }.not_to change(City, :count)
       end
 
       it 'returns a JSON representation of errors' do
@@ -66,24 +61,22 @@ RSpec.describe CitiesController, type: :controller do
   end
 
   describe 'PATCH #update' do
-    let!(:state) { State.create(name: 'Espirito Santo', abbreviation: 'ES') }
-    let!(:city) { City.create(name: 'Vitoria', state: state) }
-
     context 'with valid attributes' do
       let(:valid_attributes) { { city: { name: 'Vitoria', state_id: state.id } } }
 
-      it 'updates the city' do
+      before do
         patch :update, params: { id: city.id, city: { name: 'Vitória' } }
         city.reload
+      end
+
+      it 'updates the city name' do
         expect(city.name).to eq('Vitória')
       end
 
       it 'returns a JSON representation of the updated city' do
-        patch :update, params: { id: city.id, city: { name: 'Vitóriaa' } }
         expect(response).to have_http_status(:success)
-
         json_response = JSON.parse(response.body)
-        expect(json_response['name']).to eq('Vitóriaa')
+        expect(json_response['name']).to eq('Vitória')
         expect(json_response['state_id']).to eq(state.id)
       end
     end
@@ -107,13 +100,8 @@ RSpec.describe CitiesController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    let!(:state) { State.create(name: 'Espirito Santo', abbreviation: 'ES') }
-    let!(:city) { City.create(name: 'Vitoria', state: state) }
-
     it 'destroys the city' do
-      expect do
-        delete :destroy, params: { id: city.id }
-      end.to change(City, :count).by(-1)
+      expect { delete :destroy, params: { id: city.id } }.to change(City, :count).by(-1)
     end
 
     it 'returns a no content response' do
