@@ -12,7 +12,7 @@ Está é a pagina de resultado da busca
 
 ___
 
-# para executar o projeto
+# Executando o Projeto
 
 Abra o terminal e execute o seguinte comando:
 
@@ -27,7 +27,7 @@ Em seguida, execute o comando abaixo para criar o banco de dados
 docker-compose run web rails db:setup
 ```
 
-# para inserir dados na aplicação
+# Inserindo dados na aplicação
 
 Caso deseje inserir os dados da seed, basta executar:
 
