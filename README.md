@@ -1,24 +1,77 @@
-# README
+### Embarca - Teste - Backend Ruby on Rails
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Projeto City Search
 
-Things you may want to cover:
+Está é a pagina inicial do projeto
 
-* Ruby version
+![pagina_principal](main_page.png)
 
-* System dependencies
+Está é a pagina de resultado da busca
 
-* Configuration
+![pagina_resultado](result_page.png)
 
-* Database creation
+___
 
-* Database initialization
+# para executar o projeto
 
-* How to run the test suite
+Abra o terminal e execute o seguinte comando:
 
-* Services (job queues, cache servers, search engines, etc.)
+```bash
+# na primeira vez que for executar o projeto:
+docker-compose up web --build -d
+```
 
-* Deployment instructions
+Em seguida, execute o comando abaixo para criar o banco de dados
 
-* ...
+```bash
+docker-compose run web rails db:setup
+```
+
+# para inserir dados na aplicação
+
+Caso deseje inserir os dados da seed, basta executar:
+
+```bash
+docker-compose run web rails db:seed
+```
+
+Para inserir os dados via API, basta seguir os seguintes passsos:
+
+Para inserir um estado:
+```bash
+curl -X POST -H "Content-Type: application/json" -d '{
+  "name": "My State",
+  "abbreviation": "MS"
+}' http://localhost:3000/states
+```
+
+O retorno será algo similar a isto:
+```json
+{"id":1,"name":"My State","abbreviation":"MS","created_at":"0000-00-00T00:00:00.000Z","updated_at":"0000-00-00T00:00:00.000Z"}
+```
+
+
+Agora com o `id` retornado na requisição acima, vamos criar uma cidade executando o seguinte codigo:
+```bash
+curl -X POST -H "Content-Type: application/json" -d '{
+  "name": "My City",
+  "state_id": 1
+}' http://localhost:3000/cities
+
+```
+E o retorno será algo similar a isto:
+```json
+{"id":1,"name":"My City","state_id":1,"created_at":"0000-00-00T00:00:00.000Z","updated_at":"0000-00-00T00:00:00.000Z"}
+```
+
+# Rubocop e Testes
+
+para executar o rubocop, abra o terminal e execute o seguinte comando:
+```bash
+docker-compose run rubocop
+```
+
+para executar os testes, abra o terminal e execute o seguinte comando:
+```bash
+docker-compose run rspec
+```

@@ -7,8 +7,6 @@ class CreateCities < ActiveRecord::Migration[5.0]
       t.references :state, foreign_key: true
 
       t.timestamps
-    end
-
-    add_index :cities, :name, unique: true
+    end 
   end
 end

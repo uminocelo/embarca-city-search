@@ -2,6 +2,7 @@
 
 class CitiesController < ApplicationController
   before_action :set_city, only: %i[show update destroy]
+  skip_before_action :verify_authenticity_token, only: [:create, :update, :destroy]
 
   def index; end
 

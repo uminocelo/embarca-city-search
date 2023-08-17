@@ -20,7 +20,6 @@ ActiveRecord::Schema.define(version: 20230816031431) do
     t.integer  "state_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_cities_on_name", unique: true, using: :btree
     t.index ["state_id"], name: "index_cities_on_state_id", using: :btree
   end
 
