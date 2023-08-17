@@ -27,7 +27,7 @@ RSpec.describe CitiesController, type: :controller do
 
   describe 'POST #create' do
     context 'with valid attributes' do
-      let(:valid_attributes) { { city: { name: 'Vitoria', state_id: state.id } } }
+      let(:valid_attributes) { { city: { name: 'Guarapari', state_id: state.id } } }
 
       it 'creates a new city' do
         expect { post :create, params: valid_attributes }.to change(City, :count).by(1)
@@ -38,7 +38,7 @@ RSpec.describe CitiesController, type: :controller do
         expect(response).to have_http_status(:created)
 
         json_response = JSON.parse(response.body)
-        expect(json_response['name']).to eq('Vitoria')
+        expect(json_response['name']).to eq('Guarapari')
         expect(json_response['state_id']).to eq(state.id)
       end
     end
